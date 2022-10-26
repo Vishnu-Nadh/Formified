@@ -1,0 +1,162 @@
+.banner {
+  width: 33vw;
+  position: relative;
+  background-image: url(../assets/bg-main-desktop.png);
+  object-fit: contain;
+  background-size: cover;
+}
+
+.cards {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  width: 100%;
+  height: 70%;
+  transform: translateY(-50%);
+}
+
+.card-front {
+  position: absolute;
+  width: 80%;
+  top: 0;
+  left: 0;
+}
+
+.card-front-content {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--color-white);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 2rem;
+  font-size: 1.8rem;
+  flex-direction: column;
+}
+
+.card-back-content {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 2rem;
+  font-size: 1rem;
+}
+
+.card-cvc {
+  padding-bottom: 0.7rem;
+  padding-right: 1rem;
+}
+
+.stamps {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.big-circle {
+  width: 2.4rem;
+  height: 2.4rem;
+  background-color: var(--color-white);
+  border-radius: 50%;
+}
+
+.small-circle {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-violet-light);
+}
+
+.card-details {
+  justify-self: flex-end;
+  font-size: 1rem;
+  display: flex;
+  font-weight: 400;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.card-front img {
+  width: 100%;
+}
+
+.card-back {
+  position: absolute;
+  width: 80%;
+  bottom: 0;
+  right: 0;
+}
+
+.card-back img {
+  width: 100%;
+}
+
+@media screen and (max-width: 48em) {
+  .banner {
+    background-image: url(../assets/bg-main-mobile.png);
+    width: 100%;
+    height: 30rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .cards {
+    position: relative;
+    width: 90%;
+    left: 0;
+    top: 20%;
+    height: 100%;
+    transform: translateY(0);
+    /* height: 50%; */
+  }
+
+  .card-back {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: fit-content;
+  }
+
+  .card-front {
+    position: absolute;
+    top: 5rem;
+    left: 0;
+    height: fit-content;
+    z-index: 2;
+  }
+
+  .card-number {
+    font-size: 2rem;
+  }
+
+  .card-back-content {
+    font-size: 1.6rem;
+    padding-right: 4rem;
+  }
+}
+
+@media screen and (max-width: 56.875em) {
+  .card-front-content {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 23.45em) {
+  .banner {
+    height: 20rem;
+  }
+
+  .card-back-content {
+    font-size: 1.4rem;
+    padding-right: 2rem;
+  }
+}

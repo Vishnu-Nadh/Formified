@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap");
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* FONT */
+  --font-family: "Space Grotesk", sans-serif;
+  --fs: 1.8rem;
+  --fw: 500;
+
+  /* COLORS */
+  --color-primary-gradient: linear-gradient(
+    to bottom right,
+    hsl(249, 99%, 64%),
+    hsl(278, 94%, 30%)
+  );
+  --color-red: hsl(0, 100%, 66%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-violet-light: hsl(270, 3%, 87%);
+  --color-violet-medium: hsl(279, 6%, 55%);
+  --color-violet-dark: hsl(278, 68%, 11%);
+}
+
+html {
+  font-size: 62.5%;
+  min-height: 100vh;
+}
+
+body {
+  font-size: 1.8rem;
+  height: 100%;
+  font-size: var(--fs);
+  font-weight: var(--fw);
+  font-family: var(--font-family);
+}
+
+.form-btn {
+  margin-top: 2rem;
+  padding: 1.2rem 2.4rem;
+  width: 100%;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-white);
+  background-color: var(--color-violet-dark);
+  transition: all 0.4s ease-in;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.form-btn:hover {
+  background-color: hsl(278, 94%, 30%);
+}
+
+.form-btn:active {
+  background-color: var(--color-violet-dark);
+}
+
+@media screen and (min-width: 23.45em) {
+  html {
+    font-size: 55%;
+  }
+}
+
+@media screen and (min-width: 48em) {
+  html {
+    font-size: 62.5%;
+  }
+}
+
+@media screen and (min-width: 90em) {
+  html {
+    font-size: 75%;
+  }
+}
