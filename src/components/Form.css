@@ -37,7 +37,7 @@
 
 .form-group input::placeholder {
   color: var(--color-violet-light);
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 .form-group input:focus + .border-bottom {
@@ -45,15 +45,15 @@
 }
 
 .form-group input:focus {
-  background-color: rgba(240, 248, 255, 0.547);
+  background-color: hsla(270, 3%, 87%, 0.336);
 }
 
-.form-group.invalid input:focus + .border-bottom {
+.form-group.invalid input + .border-bottom {
   background-image: none;
   background-color: var(--color-red);
 }
 
-.form-group.invalid input:focus {
+.form-group.invalid input {
   background-color: hsla(0, 100%, 66%, 0.058);
 }
 
@@ -86,6 +86,14 @@
   font-size: 1.2rem;
   font-weight: 600;
   padding-left: 4px;
+}
+
+.form-btn:disabled,
+.form-btn:disabled:active,
+.form-btn:disabled:hover {
+  color: rgb(234, 239, 243);
+  cursor: not-allowed;
+  background-color: var(--color-violet-medium);
 }
 
 @media screen and (max-width: 63.25em) {

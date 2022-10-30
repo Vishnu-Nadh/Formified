@@ -1,78 +1,201 @@
 import React from "react";
-import { useState } from "react";
 import "./Form.css";
+import Cleave from "cleave.js/react";
+import useInput from "../hooks/use-input";
 
-const Form = () => {
-  const [enteredNumber, setEnteredNumber] = useState("");
-  const changeNumberHandler = (event) => {
-    let number = event.target.value;
-    const numArray = number.split(" ").join("").split("");
-    let numSpace = number.split("");
+const validateEmpty = (value) => {
+  if (value.trim() !== "") {
+    return { isvalid: true, message: "" };
+  } else {
+    return { isvalid: false, message: "This field cannot be blank" };
+  }
+};
 
-    if (numSpace[numSpace.length - 1] === " ") {
-      let numSpaceN = numSpace.slice(0, -2);
-      number = numSpaceN.join("");
-      setEnteredNumber(number);
-    }
+const validateDate = (value) => {
+  let validity = { isvalid: true, message: "" };
 
-    if (isNaN(numArray.join(""))) return;
-    if (numArray.length === 17) return;
-    if (numArray.length % 4 === 0 && numArray.length <= 15) {
-      number += " ";
-      setEnteredNumber(number);
-    } else {
-      setEnteredNumber(number);
-    }
+  if (value.trim() === "") {
+    validity.isvalid = false;
+    validity.message = "This field cannot be blank";
+    return validity;
+  }
 
+  if (value.trim().length !== 5 && value.trim() !== "") {
+    validity.isvalid = false;
+    validity.message = "Invalid Date";
+    return validity;
+  }
+
+  return validity;
+};
+
+const validateCvc = (value) => {
+  let validity = { isvalid: true, message: "" };
+
+  if (value.trim() === "") {
+    validity.isvalid = false;
+    validity.message = "This field cannot be blank";
+    return validity;
+  }
+
+  if (!/^\+?(0|[0-9]\d*)$/.test(value.trim())) {
+    validity.isvalid = false;
+    validity.message = "Invalid CVC";
+    return validity;
+  }
+
+  return validity;
+};
+
+const Form = ({ onSubmit }) => {
+  const {
+    enteredInput: enteredName,
+    enteredInputIsValid: enteredNameIsValid,
+    enteredInputIsInValid: enteredNameIsInValid,
+    inputChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+    resetInput: resetNameInput,
+    error: nameError,
+  } = useInput(validateEmpty);
+
+  const {
+    enteredInput: enteredNumber,
+    enteredInputIsValid: enteredNumberIsValid,
+    enteredInputIsInValid: enteredNumberIsInValid,
+    inputChangeHandler: numberChangeHandler,
+    inputBlurHandler: numberBlurHandler,
+    resetInput: resetNumberInput,
+    error: numberError,
+  } = useInput(validateEmpty);
+
+  const {
+    enteredInput: enteredDate,
+    enteredInputIsValid: enteredDateIsValid,
+    enteredInputIsInValid: enteredDateIsInValid,
+    inputChangeHandler: dateChangeHandler,
+    inputBlurHandler: dateBlurHandler,
+    resetInput: resetDateInput,
+    error: dateError,
+  } = useInput(validateDate);
+
+  const {
+    enteredInput: enteredCvc,
+    enteredInputIsValid: enteredCvcIsValid,
+    enteredInputIsInValid: enteredCvcIsInValid,
+    inputChangeHandler: cvcChangeHandler,
+    inputBlurHandler: cvcBlurHandler,
+    resetInput: resetCvcInput,
+    error: cvcError,
+  } = useInput(validateCvc);
+
+  let isFormValid = false;
+  if (
+    enteredNameIsValid &&
+    enteredNumberIsValid &&
+    enteredDateIsValid &&
+    enteredCvcIsValid
+  ) {
+    isFormValid = true;
+  }
+
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+
+    if (!isFormValid) return;
+    onSubmit();
+
+    console.log(enteredName);
     console.log(enteredNumber);
+    console.log(enteredDate);
+    console.log(enteredCvc);
+
+    resetNameInput();
+    resetNumberInput();
+    resetDateInput();
+    resetCvcInput();
   };
 
+  const nameInputClasses = `form-group ${
+    enteredNameIsInValid ? "invalid" : ""
+  }`;
+  const numberInputClasses = `form-group ${
+    enteredNumberIsInValid ? "invalid" : ""
+  }`;
+  const dateInputClasses = `form-group form-date ${
+    enteredDateIsInValid ? "invalid" : ""
+  }`;
+  const cvcInputClasses = `form-group form-cvc ${
+    enteredCvcIsInValid ? "invalid" : ""
+  }`;
+
   return (
-    <form
-      className="form"
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}
-    >
-      <div className="form-group">
+    <form className="form" onSubmit={formSubmitHandler}>
+      <div className={nameInputClasses}>
         <label htmlFor="name">Card Holder Name</label>
         <input
           type="text"
           id="name"
           name="name"
-          placeholder="e.g. Jane Foster"
+          placeholder="JANE FOSTER"
+          onChange={nameChangeHandler}
+          value={enteredName}
+          onBlur={nameBlurHandler}
         />
         <hr className="border-bottom" />
-        <p className="error"></p>
+        <p className="error">{nameError}</p>
       </div>
-      <div className="form-group">
+      <div className={numberInputClasses}>
         <label htmlFor="number">Card Number</label>
-        <input
+        <Cleave
           type="text"
           id="number"
           name="number"
-          placeholder="e.g. 1234 4563 2342 2300"
-          onChange={changeNumberHandler}
+          placeholder="1234 4563 2342 2300"
+          options={{ creditCard: true }}
+          onChange={numberChangeHandler}
           value={enteredNumber}
+          onBlur={numberBlurHandler}
         />
         <hr className="border-bottom" />
-        <p className="error"></p>
+        <p className="error">{numberError}</p>
       </div>
       <div className="form-bottom">
-        <div className="form-group form-date">
+        <div className={dateInputClasses}>
           <label htmlFor="date">Exp.Date (MM/YY)</label>
-          <input type="text" name="date" id="date" placeholder="MM/YY" />
+          <Cleave
+            type="text"
+            name="date"
+            id="date"
+            minLength="5"
+            placeholder="MM/YY"
+            options={{
+              date: true,
+              datePattern: ["m", "y"],
+            }}
+            value={enteredDate}
+            onChange={dateChangeHandler}
+            onBlur={dateBlurHandler}
+          />
           <hr className="border-bottom" />
-          <p className="error"></p>
+          <p className="error">{dateError}</p>
         </div>
-        <div className="form-group form-cvc">
+        <div className={cvcInputClasses}>
           <label htmlFor="cvc">CVC</label>
-          <input type="text" name="cvc" id="cvc" />
+          <input
+            type="text"
+            name="cvc"
+            id="cvc"
+            maxLength={3}
+            placeholder="000"
+            value={enteredCvc}
+            onChange={cvcChangeHandler}
+            onBlur={cvcBlurHandler}
+          />
           <hr className="border-bottom" />
-          <p className="error"></p>
+          <p className="error">{cvcError}</p>
         </div>
       </div>
-      <button className="form-btn" type="submit">
+      <button className="form-btn" disabled={!isFormValid} type="submit">
         <span>Submit</span>
       </button>
     </form>

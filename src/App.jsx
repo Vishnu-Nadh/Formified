@@ -6,12 +6,16 @@ import Succuss from "./components/Succuss";
 
 function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const onSubmitHandler = () => {
+    setIsSubmitted(true);
+  };
+
   return (
     <div className="App">
       <Banner />
       <div className="form-container">
         {isSubmitted && <Succuss />}
-        {!isSubmitted && <Form />}
+        {!isSubmitted && <Form onSubmit={onSubmitHandler} />}
       </div>
     </div>
   );
