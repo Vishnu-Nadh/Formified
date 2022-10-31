@@ -2,6 +2,7 @@ import React from "react";
 import "./Form.css";
 import Cleave from "cleave.js/react";
 import useInput from "../hooks/use-input";
+import { useState } from "react";
 
 const validateEmpty = (value) => {
   if (value.trim() !== "") {
@@ -48,6 +49,11 @@ const validateCvc = (value) => {
 };
 
 const Form = ({ onSubmit }) => {
+  const [crediCardType, setCrediCardType] = useState("");
+  const onCardChange = (type) => {
+    setCrediCardType(type);
+  };
+
   const {
     enteredInput: enteredName,
     enteredInputIsValid: enteredNameIsValid,
@@ -151,13 +157,19 @@ const Form = ({ onSubmit }) => {
           id="number"
           name="number"
           placeholder="1234 4563 2342 2300"
-          options={{ creditCard: true }}
+          options={{
+            creditCard: true,
+            onCreditCardTypeChanged: (type) => {
+              onCardChange(type);
+            },
+          }}
           onChange={numberChangeHandler}
           value={enteredNumber}
           onBlur={numberBlurHandler}
         />
         <hr className="border-bottom" />
         <p className="error">{numberError}</p>
+        <div className={`card-image ${crediCardType}`}></div>
       </div>
       <div className="form-bottom">
         <div className={dateInputClasses}>

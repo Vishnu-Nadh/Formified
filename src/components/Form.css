@@ -12,6 +12,44 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
+}
+
+.card-image {
+  position: absolute;
+  right: 1rem;
+  top: 38%;
+  width: 5rem;
+  height: 3rem;
+  /* background-color: royalblue; */
+  background-image: url(../assets/bg-card-front.png);
+  object-fit: contain;
+  background-position: top;
+  background-size: cover;
+  border-radius: 3px;
+  /* overflow: hidden; */
+  animation: fadeIn 0.4s ease-out;
+  transition: all 0.4s ease-out;
+}
+
+.amex {
+  background-image: url(../assets/cards/americanexpress.png);
+}
+
+.mastercard {
+  background-image: url(../assets/cards/mastercard.png);
+}
+
+.visa {
+  background-image: url(../assets/cards/visa02.png);
+}
+
+.diners {
+  background-image: url(../assets/cards/dinersclub.png);
+}
+
+.discover {
+  background-image: url(../assets/cards/discover.png);
 }
 
 .form-group label {
@@ -115,5 +153,19 @@
 
   .form-bottom {
     flex-direction: column;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
