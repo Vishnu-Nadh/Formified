@@ -1,6 +1,6 @@
 # Credic card Form Validation
 
-This project demonstates the advnaced form validation using react.js and cleave.js (input formatting library) of a credit card informations. The project used custom react hooks for the form validation.
+This project demonstates the advnaced form validation using react.js and cleave.js (input formatting library) of a credit card informations. In this project custom react hooks are used for the form validation.
 
 ## Demo
 
